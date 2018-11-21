@@ -7,7 +7,7 @@ services:
 
 before_install:
   - go get github.com/nesv/uhttpd
-  - docker build -t maximelebastard/drone-gstorage-plugin .
+  - docker build -t maximelebastard/alpine-uhttpd .
 
 deploy:
   provider: script
