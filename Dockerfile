@@ -11,14 +11,12 @@ RUN go get github.com/nesv/uhttpd
 
 FROM alpine:latest
 
-#RUN opkg-install uhttpd
-#RUN printf '#!/bin/sh\nset -e\n\nchmod 755 /www\nexec /usr/sbin/uhttpd $*\n' > /usr/sbin/run_uhttpd && chmod 755 /usr/sbin/run_uhttpd
-
 COPY --from=builder /go/bin/uhttpd /usr/local/bin/uhttpd
+RUN printf '#!/bin/sh\nset -e\n\nexec /usr/local/bin/uhttpd $*\n' > /usr/local/bin/run_uhttpd && chmod 755 /usr/local/bin/run_uhttpd
+
 
 VOLUME ["/www"]
 
 EXPOSE 80
 
-ENTRYPOINT ["/usr/local/bin/uhttpd", "-f", "-p", "80", "-h", "/www"]
-CMD [""]
+ENTRYPOINT ["/usr/local/bin/run_uhttpd", "-addr", ":80", "-dir", "/www", "-log"]
