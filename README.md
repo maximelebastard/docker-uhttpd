@@ -1,27 +1,27 @@
-# docker-uhttpd
+# docker-alpine-uhttpd
 
-A [Docker][docker] micro image for [uhttpd][uhttpd], a tiny, lightweight web server. The image is built using [progrium/busybox][progrium_busybox] to keep the footprint as small as possible. If you need a quick and small static HTTP server, give this one a go!
+A [Docker][docker] micro image for [uhttpd][uhttpd], a tiny, lightweight web server. The image is built using [alpine][alpine]. If you need a quick and small static HTTP server, give this one a go!
 
 ## Getting the Image
 
 This image is hosted on the Docker index as a trusted build and can be pulled down with:
 
-		docker pull fnichol/uhttpd
+		docker pull maximelebastard/uhttpd
 
 ## Usage
 
 To run a simple detached container:
 
-		docker run -d -p 80 fnichol/uhttpd
+		docker run -d -p 80 maximelebastard/alpine-uhttpd
 
 If you want to serve the contents of the current directory in the container (warning, the directory will be local to the system running the `docker` daemon):
 
-		docker run -d -p 80 -v `pwd`:/www fnichol/uhttpd
+		docker run -d -p 80 -v `pwd`:/www maximelebastard/alpine-uhttpd
 
 Alternatively, you can use the [data container pattern](http://docs.docker.io/use/working_with_volumes/) by creating a "data" container and mounting its volumes into the web server container. Let's use named containers to make this easier:
 
 		docker run -v /www --name www_data busybox true
-		docker run -d -p 80 --volumes-from www_data --name www fnichol/uhttpd
+		docker run -d -p 80 --volumes-from www_data --name www maximelebastard/alpine-uhttpd
 
 For fun, we'll run a container just to create an index file:
 

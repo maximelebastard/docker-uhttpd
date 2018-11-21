@@ -1,0 +1,16 @@
+sudo: required
+
+language: go
+
+services:
+  - docker
+
+before_install:
+  - go get github.com/nesv/uhttpd
+  - docker build -t maximelebastard/drone-gstorage-plugin .
+
+deploy:
+  provider: script
+  script: bash docker_push.sh
+  on:
+    branch: master
